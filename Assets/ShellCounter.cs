@@ -18,4 +18,9 @@ public class ShellCounter : MonoBehaviour
         shellCount++;
         counterText.text = shellCount.ToString();
     }
+
+    public void UpdateText()
+    {
+        counterText.text = shellCount.ToString();
+    }
 }
