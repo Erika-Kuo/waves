@@ -3,7 +3,10 @@ using UnityEngine;
 public class Mound : MonoBehaviour
 {
     public int requiredShells = 5;
-    public GameObject homeDoor;  // drag your room door trigger here
+
+    public GameObject homeDoor;  
+    public GameObject plainMound; 
+    public GameObject decoratedMound; 
 
     private bool playerNearby = false;
     private bool cutscenePlayed = false;
@@ -12,7 +15,7 @@ public class Mound : MonoBehaviour
     {
         if (playerNearby && Input.GetKeyDown(KeyCode.Q))
         {
-            if (cutscenePlayed) return; // prevent spamming
+            if (cutscenePlayed) return;
 
             if (ShellCounter.instance.shellCount >= requiredShells)
             {
@@ -20,7 +23,9 @@ public class Mound : MonoBehaviour
             }
             else
             {
-                DialogueManager.instance.ShowDialogue("I need more shells...");
+                DialogueManager.instance.ShowDialogue(
+                    "I should decorate this. I'm gonna need more shells..."
+                );
             }
         }
     }
@@ -29,27 +34,29 @@ public class Mound : MonoBehaviour
     {
         cutscenePlayed = true;
 
-        DialogueManager.instance.ShowDialogue("I should place the shells...");
+        DialogueManager.instance.ShowDialogue("Hmm, let's make it beautiful.");
+        yield return new WaitForSeconds(5);
 
-        yield return new WaitForSeconds(2);
+        // swap mound visuals
+        plainMound.SetActive(false);
+        decoratedMound.SetActive(true);
 
-        DialogueManager.instance.ShowDialogue("The mound accepts the offering.");
-
-        yield return new WaitForSeconds(2);
+        DialogueManager.instance.ShowDialogue("There we go! Mama would love this.");
+        yield return new WaitForSeconds(10);
 
         DialogueManager.instance.ShowDialogue("I should go home now.");
 
-        // Reset shell count (optional)
+        // reset shells
         ShellCounter.instance.shellCount = 0;
-        ShellCounter.instance.UpdateText();
+        ShellCounter.instance.UpdateText();  // works if you add UpdateText()
 
-        // Unlock door so Marnie can return home
         if (homeDoor != null)
             homeDoor.SetActive(true);
 
         yield return new WaitForSeconds(2);
 
         DialogueManager.instance.HideDialogue();
+        QuestManager.instance.shellQuestComplete = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
