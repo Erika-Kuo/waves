@@ -740,9 +740,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   requiredShells: 10
-  homeDoor: {fileID: 0}
-  plainMound: {fileID: 0}
-  decoratedMound: {fileID: 0}
+  homeDoor: {fileID: 994600587}
+  plainMound: {fileID: 789570477}
+  decoratedMound: {fileID: 1953149626}
 --- !u!58 &789570479
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1032,7 +1032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be4625eb26624e38ba3279b1f987b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneChangeTrigger
-  sceneToLoad: HomeScene
+  sceneToLoad: SleepTime
 --- !u!4 &994600589
 Transform:
   m_ObjectHideFlags: 0
@@ -1309,8 +1309,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

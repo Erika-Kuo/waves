@@ -9,12 +9,6 @@ public class BedTrigger : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        if (!QuestManager.instance.shellQuestComplete)
-        {
-            DialogueManager.instance.ShowDialogue("I should finish at the beach first.");
-            return;
-        }
-
         // Allowed to sleep
         SceneManager.LoadScene(DreamScene);
     }

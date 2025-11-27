@@ -42,7 +42,7 @@ public class Mound : MonoBehaviour
         decoratedMound.SetActive(true);
 
         DialogueManager.instance.ShowDialogue("There we go! Mama would love this.");
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
 
         DialogueManager.instance.ShowDialogue("I should go home now.");
 

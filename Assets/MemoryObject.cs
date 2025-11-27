@@ -1,29 +1,46 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class MemoryObject : MonoBehaviour
 {
-    public string nextSceneName;
+    public GameObject memoryImageUI;
+
+    private bool playerNearby = false;
+    private bool seenMemory = false;
+
+    void Update()
+    {
+        if (playerNearby && Input.GetKeyDown(KeyCode.Q) && !seenMemory)
+        {
+            seenMemory = true;
+            StartCoroutine(PlayMemoryCutscene());
+        }
+    }
+
+    private System.Collections.IEnumerator PlayMemoryCutscene()
+    {
+        DreamMarnieMovement.instance.locked = false;
+
+        memoryImageUI.SetActive(true);
+
+        DialogueManager.instance.ShowDialogue("It's... it's my hat. Mama? Mama gave this to me. I remember now.");
+
+        yield return new WaitForSeconds(5);
+
+        memoryImageUI.SetActive(false);
+        DialogueManager.instance.HideDialogue();
+
+        DreamMarnieMovement.instance.locked = true;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Player")) return;
-
-        StartCoroutine(MemoryCutscene());
+        if (collision.CompareTag("Player"))
+            playerNearby = true;
     }
 
-    private IEnumerator MemoryCutscene()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        DialogueManager.instance.ShowDialogue("I remember this...");
-        yield return new WaitForSeconds(2);
-
-        DialogueManager.instance.ShowDialogue("Mama used to put this on me...");
-        yield return new WaitForSeconds(2);
-
-        // Add item to room next morning
-        PlayerPrefs.SetInt("hatCollected", 1);
-
-        SceneManager.LoadScene(nextSceneName);
+        if (collision.CompareTag("Player"))
+            playerNearby = false;
     }
 }
