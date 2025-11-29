@@ -33,30 +33,34 @@ public class Mound : MonoBehaviour
     private System.Collections.IEnumerator PlaceShellsCutscene()
     {
         cutscenePlayed = true;
-
+        Debug.Log("Cutscene started!");
         DialogueManager.instance.ShowDialogue("Hmm, let's make it beautiful.");
         yield return new WaitForSeconds(5);
-
+        Debug.Log("A");
         // swap mound visuals
         plainMound.SetActive(false);
         decoratedMound.SetActive(true);
-
+        Debug.Log("B");
         DialogueManager.instance.ShowDialogue("There we go! Mama would love this.");
         yield return new WaitForSeconds(5);
-
+        Debug.Log("C");
+        QuestManager.instance.currentDayState = DayState.Night;
+        Debug.Log("D");
         DialogueManager.instance.ShowDialogue("I should go home now.");
         yield return new WaitForSeconds(5);
+        Debug.Log("E");
         // reset shells
         ShellCounter.instance.shellCount = 0;
         ShellCounter.instance.UpdateText();  // works if you add UpdateText()
-
+        Debug.Log("F");
         if (homeDoor != null)
             homeDoor.SetActive(true);
-
+        Debug.Log("G");
         yield return new WaitForSeconds(2);
 
         DialogueManager.instance.HideDialogue();
         QuestManager.instance.shellQuestComplete = true;
+        Debug.Log("Cutscene ended!");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

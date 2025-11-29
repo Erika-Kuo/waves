@@ -1,63 +1,68 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 public class MemoryObject : MonoBehaviour
 {
-    public GameObject memoryImageUI;
-    public enum MemoryType { Hat, Bunny }
+    public enum MemoryType { Hat, Bunny, Book }
     public MemoryType memoryType;
 
+    public GameObject memoryImageUI;
+
     private bool playerNearby = false;
-    private bool seenMemory = false;
+    private bool finished = false;
 
     void Update()
     {
-        if (playerNearby && Input.GetKeyDown(KeyCode.Q) && !seenMemory)
+        if (playerNearby && Input.GetKeyDown(KeyCode.Q) && !finished)
         {
-            seenMemory = true;
-            StartCoroutine(PlayMemoryCutscene());
+            finished = true;
+            StartCoroutine(PlayCutscene());
         }
     }
 
-    private System.Collections.IEnumerator PlayMemoryCutscene()
+    private System.Collections.IEnumerator PlayCutscene()
     {
-        // stop movement
+        // freeze player
         DreamMarnieMovement.instance.locked = true;
 
         memoryImageUI.SetActive(true);
 
         if (memoryType == MemoryType.Hat)
-            DialogueManager.instance.ShowDialogue("It's my hat... Mama gave this to me.");
-        else
-            DialogueManager.instance.ShowDialogue("My bunny... I remember holding this at night.");
+        {
+            QuestManager.instance.hatMemoryUnlocked = true;
+            DialogueManager.instance.ShowDialogue("My hat… Mama gave this to me.");
+        }
+        else if (memoryType == MemoryType.Bunny)
+        {
+            QuestManager.instance.bunnyMemoryUnlocked = true;
+            DialogueManager.instance.ShowDialogue("My bunny… I used to sleep with this every night.");
+        }
+        else if (memoryType == MemoryType.Book)
+        {
+            QuestManager.instance.bookMemoryUnlocked = true;
+            DialogueManager.instance.ShowDialogue("My little storybook… I remember reading this.");
+        }
+
+        // Move to next memory for next night
+        QuestManager.instance.currentMemoryIndex++;
 
         yield return new WaitForSeconds(5);
 
         memoryImageUI.SetActive(false);
         DialogueManager.instance.HideDialogue();
+
         DreamMarnieMovement.instance.locked = false;
-        // unlock correct memory
-        if (memoryType == MemoryType.Hat)
-            QuestManager.instance.hatMemoryUnlocked = true;
-        else
-            QuestManager.instance.bunnyMemoryUnlocked = true;
 
-        // THIS STOPS DreamTimer from running its normal ending
-        //QuestManager.instance.dreamEndedNormally = false;
-
-        // Return to home scene
+        // return to home
         SceneManager.LoadScene("HomeScene");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-            playerNearby = true;
+        if (collision.CompareTag("Player")) playerNearby = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-            playerNearby = false;
+        if (collision.CompareTag("Player")) playerNearby = false;
     }
 }

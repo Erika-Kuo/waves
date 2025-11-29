@@ -7,6 +7,10 @@ public class QuestManager : MonoBehaviour
     public bool hatMemoryUnlocked = false;
 
     public bool bunnyMemoryUnlocked = false;
+    public bool bookMemoryUnlocked = false;
+    public int currentMemoryIndex = 0;
+
+    public DayState currentDayState = DayState.Day;
     void Awake()
     {
         if (instance == null) instance = this;

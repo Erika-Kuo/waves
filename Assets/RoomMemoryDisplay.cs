@@ -2,19 +2,14 @@ using UnityEngine;
 
 public class RoomMemoryDisplay : MonoBehaviour
 {
-    public GameObject hat;
-    public GameObject bunny;
+    public GameObject hatInRoom;
+    public GameObject bunnyInRoom;
+    public GameObject bookInRoom;
 
     void Start()
     {
-        if (QuestManager.instance.hatMemoryUnlocked)
-            gameObject.SetActive(true);
-        else
-            gameObject.SetActive(false);
-
-        if (QuestManager.instance.bunnyMemoryUnlocked)
-            gameObject.SetActive(true);
-        else
-            gameObject.SetActive(false);
+        hatInRoom.SetActive(QuestManager.instance.hatMemoryUnlocked);
+        bunnyInRoom.SetActive(QuestManager.instance.bunnyMemoryUnlocked);
+        bookInRoom.SetActive(QuestManager.instance.bookMemoryUnlocked);
     }
 }
