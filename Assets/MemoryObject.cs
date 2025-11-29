@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MemoryObject : MonoBehaviour
 {
     public GameObject memoryImageUI;
+    public enum MemoryType { Hat, Bunny }
+    public MemoryType memoryType;
 
     private bool playerNearby = false;
     private bool seenMemory = false;
@@ -18,26 +21,32 @@ public class MemoryObject : MonoBehaviour
 
     private System.Collections.IEnumerator PlayMemoryCutscene()
     {
-        Debug.Log("Instance: " + DreamMarnieMovement.instance);
-        Debug.Log("RB: " + (DreamMarnieMovement.instance != null ? DreamMarnieMovement.instance.rb : null));
-
-        // STOP MOVEMENT
+        // stop movement
         DreamMarnieMovement.instance.locked = true;
-        DreamMarnieMovement.instance.rb.linearVelocity = Vector2.zero;
 
-        // SHOW MEMORY IMAGE
         memoryImageUI.SetActive(true);
 
-        // SHOW DIALOGUE
-        DialogueManager.instance.ShowDialogue("It's... it's my hat. Mama? Mama gave this to me. I remember now.");
+        if (memoryType == MemoryType.Hat)
+            DialogueManager.instance.ShowDialogue("It's my hat... Mama gave this to me.");
+        else
+            DialogueManager.instance.ShowDialogue("My bunny... I remember holding this at night.");
 
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(5);
 
-        // HIDE IMAGE + UNFREEZE MOVEMENT
         memoryImageUI.SetActive(false);
         DialogueManager.instance.HideDialogue();
         DreamMarnieMovement.instance.locked = false;
-        QuestManager.instance.hatMemoryUnlocked = true;
+        // unlock correct memory
+        if (memoryType == MemoryType.Hat)
+            QuestManager.instance.hatMemoryUnlocked = true;
+        else
+            QuestManager.instance.bunnyMemoryUnlocked = true;
+
+        // THIS STOPS DreamTimer from running its normal ending
+        //QuestManager.instance.dreamEndedNormally = false;
+
+        // Return to home scene
+        SceneManager.LoadScene("HomeScene");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

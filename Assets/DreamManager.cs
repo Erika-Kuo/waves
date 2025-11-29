@@ -2,15 +2,19 @@ using UnityEngine;
 
 public class DreamManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject hatMemory;
+    public GameObject bunnyMemory;
+
     void Start()
     {
-        
-    }
+        hatMemory.SetActive(false);
+        bunnyMemory.SetActive(false);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (QuestManager.instance.shellQuestComplete && !QuestManager.instance.hatMemoryUnlocked)
+            hatMemory.SetActive(true);
+
+        if (QuestManager.instance.hatMemoryUnlocked && !QuestManager.instance.bunnyMemoryUnlocked)
+            bunnyMemory.SetActive(true);
     }
 }
+

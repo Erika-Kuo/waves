@@ -12,23 +12,34 @@ public class DreamTimer : MonoBehaviour
     void Start()
     {
         timeLeft = dreamDuration;
+
+        // Stop timer from running if something is missing
+        if (timerText == null)
+        {
+            Debug.LogError("DreamTimer: No timerText assigned!");
+        }
     }
 
     void Update()
     {
         timeLeft -= Time.deltaTime;
 
-        timerText.text = Mathf.Ceil(timeLeft).ToString();
+        if (timerText != null)
+            timerText.text = Mathf.Ceil(timeLeft).ToString();
 
         if (timeLeft <= 0)
-        {
             EndDream();
-        }
     }
 
-    void EndDream()
+    public void EndDream()
     {
-        // Fade out + return to home scene
+        // Dream ended before interacting with memory
+        //QuestManager.instance.dreamEndedNormally = true;
+
+        // OPTIONAL: Freeze movement before scene load
+        if (DreamMarnieMovement.instance != null)
+            DreamMarnieMovement.instance.locked = true;
+
         SceneManager.LoadScene("HomeScene");
     }
 }
