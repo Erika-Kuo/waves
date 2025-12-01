@@ -17,26 +17,32 @@ public class EndingController : MonoBehaviour
     }
 
     private System.Collections.IEnumerator PlayEnding()
+{
+    // SHOW TEXT ONE BY ONE
+    foreach (string line in creditLines)
     {
-        // SHOW TEXT ONE BY ONE
-        foreach (string line in creditLines)
-        {
-            creditText.text = line;
-            yield return new WaitForSeconds(delay);
-        }
-
-        // OPTIONAL – SHOW FINAL IMAGES
-        //foreach (var sprite in endingSprites)
-        //{
-            //endingImage.sprite = sprite;
-            //endingImage.gameObject.SetActive(true);
-            //yield return new WaitForSeconds(3f);
-            //endingImage.gameObject.SetActive(false);
-        //}
+        creditText.text = line;
+        yield return new WaitForSeconds(delay);
     }
+
+    // OPTIONAL – SHOW FINAL IMAGES
+    //foreach (var sprite in endingSprites)
+    //{
+        //endingImage.sprite = sprite;
+        //endingImage.gameObject.SetActive(true);
+        //yield return new WaitForSeconds(3f);
+        //endingImage.gameObject.SetActive(false);
+    //}
+
+    // Automatically go to menu after all credits
+    Debug.Log("Loading waves scene now...");
+    SceneManager.LoadScene("waves");
+}
+
 
     public void ReturnToMenu()
     {
+        Debug.Log("Trying to load scene: waves");
         SceneManager.LoadScene("waves");
     }
 }

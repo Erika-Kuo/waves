@@ -1023,6 +1023,7 @@ GameObject:
   m_Component:
   - component: {fileID: 427844171}
   - component: {fileID: 427844170}
+  - component: {fileID: 427844172}
   m_Layer: 0
   m_Name: RoomHat
   m_TagString: Untagged
@@ -1103,6 +1104,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 941635090}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &427844172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427844169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab4093339aa84cc59e9116dd0851081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomMemoryDisplay
+  roomItems: []
+  RoomHat: {fileID: 0}
+  RoomBunny: {fileID: 0}
+  RoomBook: {fileID: 0}
 --- !u!1 &488779913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,7 +1605,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ab4093339aa84cc59e9116dd0851081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomMemoryDisplay
-  roomItems: []
+  roomItems:
+  - {fileID: 427844169}
+  - {fileID: 191461882}
+  - {fileID: 740039235}
+  RoomHat: {fileID: 427844169}
+  RoomBunny: {fileID: 191461882}
+  RoomBook: {fileID: 740039235}
 --- !u!4 &941635090
 Transform:
   m_ObjectHideFlags: 0
@@ -1878,6 +1901,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1293868330}
+  - component: {fileID: 1293868331}
   m_Layer: 0
   m_Name: DayState
   m_TagString: Untagged
@@ -1900,6 +1924,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2032359155}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1293868331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293868329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5833e302b72e4aeda9eba0c22f26e83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DayStateManager
+  currentState: 0
 --- !u!1 &1409915949
 GameObject:
   m_ObjectHideFlags: 0

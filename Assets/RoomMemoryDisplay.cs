@@ -3,7 +3,9 @@ using UnityEngine;
 public class RoomMemoryDisplay : MonoBehaviour
 {
     public GameObject[] roomItems; // hat, bunny, book
-
+    public GameObject RoomHat;
+    public GameObject RoomBunny;
+    public GameObject RoomBook;
     void Start()
     {
         RoomBook.SetActive(QuestManager.instance.bookMemoryUnlocked);
