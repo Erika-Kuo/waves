@@ -24,6 +24,7 @@ public class MemoryInteract : MonoBehaviour
     private System.Collections.IEnumerator PlayCutscene()
     {
         DreamMarnieMovement.instance.locked = true;
+        MemoryUIManager.HideAllMemoryImages();
         memoryImageUI.SetActive(true);
         memoryImageComponent.sprite = memorySprite;
         memoryImageUI.gameObject.SetActive(true);
