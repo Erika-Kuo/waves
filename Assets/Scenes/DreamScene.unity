@@ -416,8 +416,7 @@ MonoBehaviour:
   memoryIndex: 0
   memoryImageUI: {fileID: 1582934317}
   memorySprite: {fileID: -5191414082449171980, guid: 9390fcab71875449db016ee18929009d, type: 3}
-  cutsceneImages:
-  - {fileID: 1582934317}
+  cutsceneImages: []
   dialogueLines:
   - I adore this hat...
   - Someone gave it to me?
@@ -725,7 +724,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548813058}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -964,6 +963,7 @@ GameObject:
   - component: {fileID: 715526607}
   - component: {fileID: 715526606}
   - component: {fileID: 715526608}
+  - component: {fileID: 715526609}
   m_Layer: 0
   m_Name: DayState
   m_TagString: Untagged
@@ -1011,6 +1011,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4606affaa587f43ef80c3a04d8bc5039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &715526609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715526605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f4ccefee227433ca0012d520d85fb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  allMemoryImages:
+  - {fileID: 1582934317}
+  - {fileID: 548813058}
+  - {fileID: 634220295}
 --- !u!1 &992896817
 GameObject:
   m_ObjectHideFlags: 0

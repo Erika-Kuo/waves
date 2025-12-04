@@ -1,14 +1,16 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI; // needed for Image component
+using UnityEngine.UI;
+using System.Collections;
+
 public class MemoryInteract : MonoBehaviour
 {
-    public int memoryIndex;            // 0 = hat, 1 = bunny, 2 = book
-    public GameObject memoryImageUI;  
-    public Sprite memorySprite;  // The UI image to show
-    public GameObject[] cutsceneImages;
-    public string[] dialogueLines;     // Dialogue lines to show for this memory
+    public int memoryIndex;                // 0 = hat, 1 = bunny, 2 = book
+    public GameObject memoryImageUI;       // The UI GameObject for THIS memory
+    public Sprite memorySprite;            // Sprite for THIS memory
+    public GameObject[] cutsceneImages;    // Images for THIS cutscene only
+    public string[] dialogueLines;
     public Image memoryImageComponent;
+
     private bool playerNearby = false;
     private bool finished = false;
 
@@ -21,44 +23,39 @@ public class MemoryInteract : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator PlayCutscene()
+    IEnumerator PlayCutscene()
     {
         DreamMarnieMovement.instance.locked = true;
+
+        // 🔥 IMPORTANT: hide ALL memory images first
         MemoryUIManager.HideAllMemoryImages();
+
+        // 🔥 Now enable ONLY this one
         memoryImageUI.SetActive(true);
         memoryImageComponent.sprite = memorySprite;
-        memoryImageUI.gameObject.SetActive(true);
+
+        yield return null; 
+        // Hide all cutscene images before starting
         foreach (GameObject img in cutsceneImages)
-        {
             img.SetActive(false);
-        }
 
-        // Then show the correct one
-        memoryImageUI.SetActive(true);
-        memoryImageComponent.sprite = memorySprite;
-
-        // Show dialogue line by line
+        // Dialogue lines
         foreach (string line in dialogueLines)
         {
+            memoryImageUI.SetActive(true);
             DialogueManager.instance.ShowDialogue(line);
             yield return new WaitForSeconds(3);
         }
-        // Show cutscene images one by one
+
+        // Cutscene images
         foreach (GameObject img in cutsceneImages)
         {
             img.SetActive(true);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2);
             img.SetActive(false);
         }
+
         // Save memory
-        //QuestManager.instance.memoryUnlocked[memoryIndex] = true;
-
-        // Prepare next memory
-        //QuestManager.instance.currentMemoryIndex++;
-
-        //yield return new WaitForSeconds(1);
-
-        // Save memory using index + booleans
         if (memoryIndex == 0)
             QuestManager.instance.hatMemoryUnlocked = true;
         else if (memoryIndex == 1)
@@ -66,19 +63,16 @@ public class MemoryInteract : MonoBehaviour
         else if (memoryIndex == 2)
             QuestManager.instance.bookMemoryUnlocked = true;
 
-// Also save to the array (optional but helps DreamManager)
         QuestManager.instance.memoryUnlocked[memoryIndex] = true;
-
-// Increase memory index for next night
         QuestManager.instance.currentMemoryIndex++;
 
+        // Turn off our UI
         memoryImageUI.SetActive(false);
         DialogueManager.instance.HideDialogue();
-        
+        MemoryUIManager.HideAllMemoryImages();
+    
         DreamMarnieMovement.instance.locked = false;
-
         QuestManager.instance.currentDayState = QuestManager.DayState.Day;
-        // If all memories unlocked, load Thank You scene
     }
 
     private void OnTriggerEnter2D(Collider2D col)
